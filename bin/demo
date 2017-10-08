@@ -12,7 +12,13 @@ GEM_ROOT = File.dirname(here)
 LOGFILE = File.open(File.join(GEM_ROOT, 'development.log'), 'a')
 LOGGER = Logger.new(LOGFILE)
 
-height, width = $stdout.winsize
+width, height = nil
+begin
+  height, width = $stdout.winsize
+rescue Errno::ENOTTY
+  width = 80
+  height = 40
+end
 
 layout = YogaLayout::Node[
   width: width,
@@ -22,7 +28,7 @@ layout = YogaLayout::Node[
   border: 1,
   children: [
     YogaLayout::Node[
-      width: 30,
+      width: 20,
       margin_end: 5,
       border: 1,
     ],
@@ -44,4 +50,4 @@ layout = YogaLayout::Node[
 data = Boxtree.draw_tree(layout)
 puts data
 
-binding.pry
+binding.pry if $stdout.tty?
