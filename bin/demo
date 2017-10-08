@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+require 'bundler/setup'
+
+require 'boxtree'
+require 'pry'
+require 'io/console'
+require 'logger'
+require 'yoga_layout'
+
+here = File.dirname(__FILE__)
+GEM_ROOT = File.dirname(here)
+LOGFILE = File.open(File.join(GEM_ROOT, 'development.log'), 'a')
+LOGGER = Logger.new(LOGFILE)
+
+height, width = $stdout.winsize
+
+layout = YogaLayout::Node[
+  width: width,
+  height: height,
+  flex_direction: :row,
+  padding: 3,
+  border: 1,
+  children: [
+    YogaLayout::Node[
+      width: 30,
+      margin_end: 5,
+      border: 1,
+    ],
+    YogaLayout::Node[
+      height: 10,
+      align_self: :center,
+      flex_grow: 1,
+      border: 1,
+    ]
+  ],
+]
+
+#layout = YogaLayout::Node[
+  #width: 5,
+  #height: 5,
+  #border: 1,
+#]
+
+data = Boxtree.draw_tree(layout)
+puts data
+
+binding.pry

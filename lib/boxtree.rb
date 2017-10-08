@@ -1,10 +1,4 @@
-require 'bundler/setup'
 require 'yoga_layout'
-require 'logger'
-require 'io/console'
-
-LOGFILE = File.open('./development.log', 'a')
-LOGGER = Logger.new(LOGFILE)
 
 # Module Boxtree implements a basic scene graph based on the Yoga layout
 # library, for rendering to monospaced text output, eg, the VT100 terminal.
